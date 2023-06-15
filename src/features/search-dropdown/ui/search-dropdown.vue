@@ -11,7 +11,7 @@
         type="search"
         id="default-search"
         :class="inputClassList"
-        placeholder="Search Mockups, Logos...">
+        placeholder="In the far far galaxy...">
     </div>
     <div v-if="isDropdownOpen" class="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg">
       <div class="rounded-md bg-white shadow-xs">

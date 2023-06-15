@@ -30,9 +30,6 @@ export default defineComponent({
       },
       deep: true
     }
-  },
-  mounted() {
-    this.setFavorites(browserStorage.get('favorites'))
   }
 })
 </script>

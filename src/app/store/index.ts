@@ -5,24 +5,28 @@ const store = createStore({
   state() {
     return {
       users: [],
-      favorites: []
+      favorites: [],
+      userData: {}
     }
   },
   getters: {
     favoriteIds: state => state.favorites.reduce((acc, curr) => {
       acc.push(curr.id)
       return acc
-    }, [])
+    }, []),
+    isCurrentUserFavorite: state => {
+      console.log(state.favorites, state.userData)
+      return state.favorites.some(item => item.id === state.userData.id)
+    }
   },
   mutations: {
     setUsers: (state, users) => state.users = [...users],
     setFavorites: (state, favorites) => state.favorites = [...favorites],
+    setUserData: (state, data) => state.userData = {...data},
     toggleFavorite: (state, user) => {
       if (state.favorites.some(item => item.id === user.id)) {
-        console.log('SHOULD DELETE')
         state.favorites = state.favorites.filter(f => f.id !== user.id)
       } else {
-        console.log('SHOULD ADD')
         state.favorites.push(user)
       }
     }
@@ -34,6 +38,10 @@ const store = createStore({
         id: getUserId(i.url),
         ...i
       }))])
+    },
+    getUserInfo: async({ commit }, { id }) => {
+      const response = { ...(await api.get(`people/${id}`))?.data, id }
+      commit('setUserData', response)
     }
   }
 })

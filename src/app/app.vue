@@ -12,6 +12,31 @@
   </main>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+import { defineComponent } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
+import { mapMutations, mapState } from 'vuex'
+
+import { browserStorage } from '@/shared/lib'
+
+export default defineComponent({
+  name: 'app',
+  methods: {
+    ...mapMutations(['setFavorites'])
+  },
+  computed: {
+    ...mapState(['favorites'])
+  },
+  mounted() {
+    this.setFavorites(browserStorage.get('favorites'))
+  },
+  watch: {
+    favorites: {
+      handler(newValue) {
+        browserStorage.set('favorites', newValue.sort((a, b) => a.id > b.id ? 1 : -1))
+      },
+      deep: true
+    }
+  },
+})
 </script>

@@ -53,14 +53,6 @@ export default defineComponent({
   computed: {
     ...mapState(['favorites']),
     ...mapGetters(['favoriteIds'])
-  },
-  watch: {
-    favorites: {
-      handler(newValue) {
-        browserStorage.set('favorites', newValue.sort((a, b) => a.id > b.id ? 1 : -1))
-      },
-      deep: true
-    }
-  },
+  }
 })
 </script>
