@@ -11,7 +11,8 @@
         type="search"
         id="default-search"
         :class="inputClassList"
-        placeholder="In the far far galaxy...">
+        placeholder="In the far far galaxy..."
+      />
     </div>
     <div v-if="isDropdownOpen" class="origin-top-left absolute left-0 mt-2 w-56 rounded-md shadow-lg">
       <div class="rounded-md bg-white shadow-xs">
@@ -21,7 +22,9 @@
             <router-link
               v-for="p in predictions"
               :to="`/peoples/${p.id}`"
-              :class="optionClassList">
+              :class="optionClassList"
+              :key="p.id"
+            >
               {{ p.name }}
             </router-link>
           </div>
@@ -31,11 +34,12 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
 import debounce from 'debounce'
 
 import { api, getUserId } from '@/shared/lib'
+import { IPrediction } from '@/features/search-dropdown'
 
 export default defineComponent({
   name: 'v-search-dropdown',
@@ -44,23 +48,28 @@ export default defineComponent({
       searchVal: '',
       isDropdownOpen: false,
       predictionsLoading: false,
-      predictions: []
+      predictions: [] as IPrediction[],
     }
   },
   methods: {
-    handleInput: debounce(function({ target: { value } }) {
+    handleInput: debounce(function({ target: { value } }: InputEvent) {
       this.predictionsLoading = true
       this.searchVal = value
+
       api.get(`/people/?search=${value}`)
-        .then(res => this.predictions = [...res.data.results].map(p => ({
-          id: getUserId(p.url),
-          name: p.name,
-        })))
-        .finally(() => this.predictionsLoading = false)
+        .then(res => {
+          this.predictions = [...res.data.results].map(p => ({
+            id: getUserId(p.url),
+            name: p.name,
+          }))
+        })
+        .finally(() => {
+          this.predictionsLoading = false
+        })
     }, 500),
-    setDropdown(newState) {
+    setDropdown(newState: boolean) {
       this.isDropdownOpen = newState
-    }
+    },
   },
   computed: {
     inputClassList() {
@@ -68,7 +77,7 @@ export default defineComponent({
     },
     optionClassList() {
       return 'font-bold block px-4 py-2 text-sm leading-5 text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900'
-    }
-  }
+    },
+  },
 })
 </script>

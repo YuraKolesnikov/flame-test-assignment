@@ -1,2 +1,3 @@
+import { IPrediction } from './config/types'
 import VSearchDropdown from './ui/search-dropdown.vue'
-export { VSearchDropdown }
+export { IPrediction, VSearchDropdown }

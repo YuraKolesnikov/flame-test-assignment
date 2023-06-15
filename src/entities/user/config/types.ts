@@ -1,4 +1,4 @@
-export interface User {
+export interface IUser {
   birth_year?: string;
   created?: string;
   edited?: string;

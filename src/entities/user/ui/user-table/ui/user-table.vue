@@ -25,19 +25,25 @@
   <div v-else>No data available</div>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from 'vue'
-import { mapMutations, mapState, mapGetters } from 'vuex'
+import { mapMutations, mapGetters } from 'vuex'
 import { RouterLink } from 'vue-router'
 
 import { VTable, VHeadCell, VBodyCell, VLoader, VFavoriteButton } from '@/shared/ui'
-import { browserStorage } from '@/shared/lib'
+import { UserForTable } from '@/entities/user'
 
 export default defineComponent({
   name: 'v-user-table',
   props: {
-    users: Array,
-    isLoading: Boolean,
+    users: {
+      type: Array as () => UserForTable[],
+      required: true
+    },
+    isLoading: {
+      type: Boolean,
+      default: false
+    }
   },
   components: {
     RouterLink,
@@ -51,7 +57,6 @@ export default defineComponent({
     ...mapMutations(['toggleFavorite'])
   },
   computed: {
-    ...mapState(['favorites']),
     ...mapGetters(['favoriteIds'])
   }
 })
