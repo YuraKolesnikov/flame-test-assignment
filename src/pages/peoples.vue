@@ -1,6 +1,7 @@
 <template>
   <section>
-    <h2 class="text-2xl font-semibold leading-tight">Peoples</h2>
+    <h2 class="text-2xl font-semibold leading-tight mb-8">Peoples</h2>
+    <v-search-dropdown />
     <v-user-table :users="users" :is-loading="isLoading" />
   </section>
 </template>
@@ -11,12 +12,14 @@ import { RouterLink } from 'vue-router'
 import { mapState, mapGetters, mapActions } from 'vuex'
 
 import { VUserTable } from '@/entities/user'
+import { VSearchDropdown } from '@/features'
 
 export default defineComponent({
 	name: 'peoples',
   components: {
     RouterLink,
-    VUserTable
+    VUserTable,
+    VSearchDropdown
   },
   data() {
 	  return {
