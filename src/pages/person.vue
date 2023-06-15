@@ -1,6 +1,6 @@
 <template>
 	<div>
-    <v-user-card :user="userData" :is-favorite="isCurrentUserFavorite" @toggle-favorite="onToggleFavorite" />
+    <v-user-card :user="userData" :is-favorite="isCurrentUserFavorite" :is-loading="isLoading" @toggle-favorite="onToggleFavorite" />
 	</div>
 </template>
 
@@ -26,6 +26,11 @@ export default defineComponent({
 			id,
 		}
 	},
+  data() {
+	  return {
+	    isLoading: false
+    }
+  },
   computed: {
 	  ...mapState(['userData']),
     ...mapGetters(['isCurrentUserFavorite'])
@@ -38,8 +43,10 @@ export default defineComponent({
     }
   },
 	async mounted() {
+	  this.isLoading = true
 		if (!!this.id) {
       await this.getUserInfo({ id: this.id })
+      this.isLoading = false
 		}
 	},
   unmounted() {
