@@ -107,7 +107,6 @@
 import { defineComponent } from 'vue'
 
 import { VFavoriteButton } from '@/shared/ui'
-import { IUser } from '@/entities/user'
 
 export default defineComponent({
   name: 'v-user-card',
@@ -116,7 +115,7 @@ export default defineComponent({
   },
   props: {
     user: {
-      type: Object as () => IUser,
+      type: Object,
       required: true
     },
     isLoading: {

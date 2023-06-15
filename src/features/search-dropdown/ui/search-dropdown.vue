@@ -39,7 +39,6 @@ import { defineComponent } from 'vue'
 import debounce from 'debounce'
 
 import { api, getUserId } from '@/shared/lib'
-import { IPrediction } from '@/features/search-dropdown'
 
 export default defineComponent({
   name: 'v-search-dropdown',
@@ -48,7 +47,7 @@ export default defineComponent({
       searchVal: '',
       isDropdownOpen: false,
       predictionsLoading: false,
-      predictions: [] as IPrediction[],
+      predictions: [],
     }
   },
   methods: {

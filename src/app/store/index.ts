@@ -1,15 +1,7 @@
 import { createStore } from 'vuex'
 import { api, getUserId } from '@/shared/lib'
 
-import { IUser } from '@/entities/user'
-
-interface State {
-  users: IUser[],
-  favorites: IUser[],
-  userData: IUser
-}
-
-const store = createStore<State>({
+const store = createStore({
   state() {
     return {
       users: [],
@@ -27,10 +19,10 @@ const store = createStore<State>({
     }
   },
   mutations: {
-    setUsers: (state, users: IUser[]) => state.users = [...users],
-    setFavorites: (state, favorites: IUser[]) => state.favorites = [...favorites],
-    setUserData: (state, data: IUser) => state.userData = { ...data },
-    toggleFavorite: (state, user: IUser) => {
+    setUsers: (state, users) => state.users = [...users],
+    setFavorites: (state, favorites) => state.favorites = [...favorites],
+    setUserData: (state, data) => state.userData = { ...data },
+    toggleFavorite: (state, user) => {
       if (state.favorites.some(item => item.id === user.id)) {
         state.favorites = state.favorites.filter(f => f.id !== user.id)
       } else {
